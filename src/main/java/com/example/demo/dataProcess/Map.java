@@ -104,22 +104,22 @@ public class Map {
     }
 
     // 初始化
-    public static void init(){
+    public static void init(boolean withHead){
         try{
             Connection conn = getConn("db2","root","qazxsw123");
             HashMap<String,String> items = item2entityID(conn);
             HashMap<String,String> persons = person2entityID(conn);
             HashMap<String,String> users = user2newID(conn);
-            HashMap<String,String[]> properties = property2entityIDs(conn,false);
+            HashMap<String,String[]> properties = property2entityIDs(conn,false,items);
             HashMap<String,ArrayList<String[]>> ratings = convertRating(conn,users,items,3);
             HashMap<String,ArrayList<String[]>> kg = convertKg(conn,persons,items);
 
-            write("items",items,",");
-            write("users",users,",");
-            write("persons",persons,",");
-            write("properties",properties,",");
-            write("ratings",ratings,",");
-            write("kg",kg,",");
+            write("items",items,",",withHead);
+            write("users",users,",",withHead);
+            write("persons",persons,",",withHead);
+            write("properties",properties,",",withHead);
+            write("ratings",ratings,",",withHead);
+            write("kg",kg,",",withHead);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -134,7 +134,7 @@ public class Map {
     }
 
     // 影视资源的属性ID转换成的entityIDs  k:v  ->  filmID:[entity1,entity2,...,entity6]
-    public static HashMap<String,String[]> property2entityIDs(Connection conn, boolean DEFAULT) throws Exception { 
+    public static HashMap<String,String[]> property2entityIDs(Connection conn, boolean DEFAULT,HashMap<String,String> items) throws Exception {
         PreparedStatement statement = conn.prepareStatement("select genres,language,area,rating,film.type,releaseDate,filmID from film;");
         ResultSet propertyResultSet = statement.executeQuery();
         HashMap<String,String[]> properties=new HashMap<>(); // 整个数据集的属性集的entityID
@@ -253,7 +253,7 @@ public class Map {
                 if(entityIDs[7].equals(period.get("默认"))) entityIDs[7]="";
             }
 
-            properties.put(propertyResultSet.getString(7),entityIDs);
+            properties.put(items.get(propertyResultSet.getString(7)),entityIDs);
         }
 
         return properties;
@@ -301,6 +301,7 @@ public class Map {
             persons.put(p,entityBeginID+"");
             entityBeginID++;
         });
+        System.out.println("num of person : "+persons.size());
         return persons;
     }
 
@@ -340,7 +341,7 @@ public class Map {
     }
 
     // itemID:[(personID,relationID),()...()]
-    public static HashMap<String,ArrayList<String[]>> convertKg(Connection conn,HashMap<String,String> persons,HashMap<String,String> items) throws SQLException{ // 还没写完
+    public static HashMap<String,ArrayList<String[]>> convertKg(Connection conn,HashMap<String,String> persons,HashMap<String,String> items) throws SQLException{
         HashMap<String,ArrayList<String[]>> kg = new HashMap<>();
 
         ResultSet actors = conn.prepareStatement("select filmID,actorID from perform;").executeQuery();
@@ -365,11 +366,15 @@ public class Map {
     }
 
     // 将上面这些数据写入文件保存
-    public static void write(String mode,Object collection,String sep) throws Exception{
+    public static void write(String mode,Object collection,String sep,boolean withHead) throws Exception{
+
+        String dirPath = "e:/kg";
+
         switch (mode){
             case "properties":{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/kg.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/kg.csv",true);
                 System.out.println("converting properties...");
+                if(withHead) fw.write("itemID"+sep+"relationID"+sep+"entityID"+"\n");
                 HashMap<String,String[]> properties = (HashMap<String,String[]>)collection;
                 for(String itemID:properties.keySet()){
                     String[] ps = properties.get(itemID);
@@ -379,8 +384,9 @@ public class Map {
                 break;
             }
             case "items":{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/entities.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/entities.csv",true);
                 System.out.println("converting items...");
+                if(withHead) fw.write("itemID"+sep+"entityID\n");
                 HashMap<String,String> items = (HashMap<String,String>)collection;
                 items.forEach((itemID,entity)->{
                     try {
@@ -393,7 +399,7 @@ public class Map {
                 break;
             }
             case "persons" :{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/entities.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/entities.csv",true);
                 System.out.println("converting persons...");
                 HashMap<String,String> persons = (HashMap<String,String>)collection;
                 persons.forEach((personID,entityID)->{
@@ -407,8 +413,9 @@ public class Map {
                 break;
             }
             case "users":{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/users.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/users.csv",true);
                 System.out.println("converting users...");
+                if(withHead) fw.write("user_oldID"+sep+"user_newID\n");
                 HashMap<String,String> users = (HashMap<String,String>)collection;
                 users.forEach((userID,entityID)->{
                     try {
@@ -421,8 +428,9 @@ public class Map {
                 break;
             }
             case "ratings":{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/ratings.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/ratings.csv",true);
                 System.out.println("converting ratings...");
+                if(withHead) fw.write("userID"+sep+"itemID"+sep+"rating\n");
                 HashMap<String,ArrayList<String[]>> ratings = (HashMap<String,ArrayList<String[]>>)collection;
                 ratings.forEach((userID,rating_list)->{
                     rating_list.forEach((rating)->{
@@ -437,7 +445,7 @@ public class Map {
                 break;
             }
             case "kg":{
-                FileWriter fw = new FileWriter("e:/新建文件夹/data/kg.csv",true);
+                FileWriter fw = new FileWriter(dirPath+"/data/kg.csv",true);
                 System.out.println("converting kg...");
                 HashMap<String,ArrayList<String[]>> kg = (HashMap<String,ArrayList<String[]>>)collection;
                 kg.forEach((itemID,person_relationList)->{
@@ -459,11 +467,9 @@ public class Map {
 
     }
 
-
-
-
     public static void main(String[] args){
-        init();
+        init(false);
+        System.out.print(entityBeginID);
     }
 
 }
