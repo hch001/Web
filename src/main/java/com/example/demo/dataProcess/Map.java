@@ -104,7 +104,7 @@ public class Map {
     }
 
     // 初始化
-    public static void init(boolean withHead){
+    public void init(boolean withHead){
         try{
             Connection conn = getConn("db2","root","qazxsw123");
             HashMap<String,String> items = item2entityID(conn);
@@ -120,6 +120,7 @@ public class Map {
             write("properties",properties,",",withHead);
             write("ratings",ratings,",",withHead);
             write("kg",kg,",",withHead);
+            write("relations",null,",",withHead);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -373,7 +374,7 @@ public class Map {
         switch (mode){
             case "properties":{
                 FileWriter fw = new FileWriter(dirPath+"/data/kg.csv",true);
-                System.out.println("converting properties...");
+                System.out.println("writing properties into \"kg.csv\"...");
                 if(withHead) fw.write("itemID"+sep+"relationID"+sep+"entityID"+"\n");
                 HashMap<String,String[]> properties = (HashMap<String,String[]>)collection;
                 for(String itemID:properties.keySet()){
@@ -385,7 +386,7 @@ public class Map {
             }
             case "items":{
                 FileWriter fw = new FileWriter(dirPath+"/data/entities.csv",true);
-                System.out.println("converting items...");
+                System.out.println("writing items into \"entities.csv\"...");
                 if(withHead) fw.write("itemID"+sep+"entityID\n");
                 HashMap<String,String> items = (HashMap<String,String>)collection;
                 items.forEach((itemID,entity)->{
@@ -400,7 +401,8 @@ public class Map {
             }
             case "persons" :{
                 FileWriter fw = new FileWriter(dirPath+"/data/entities.csv",true);
-                System.out.println("converting persons...");
+                System.out.println("writing persons into \"entities\"...");
+                if(withHead) fw.write("personID"+sep+"entityID\n");
                 HashMap<String,String> persons = (HashMap<String,String>)collection;
                 persons.forEach((personID,entityID)->{
                     try {
@@ -414,7 +416,7 @@ public class Map {
             }
             case "users":{
                 FileWriter fw = new FileWriter(dirPath+"/data/users.csv",true);
-                System.out.println("converting users...");
+                System.out.println("writing users into \"users.csv\"...");
                 if(withHead) fw.write("user_oldID"+sep+"user_newID\n");
                 HashMap<String,String> users = (HashMap<String,String>)collection;
                 users.forEach((userID,entityID)->{
@@ -429,7 +431,7 @@ public class Map {
             }
             case "ratings":{
                 FileWriter fw = new FileWriter(dirPath+"/data/ratings.csv",true);
-                System.out.println("converting ratings...");
+                System.out.println("writing ratings into rating.csv...");
                 if(withHead) fw.write("userID"+sep+"itemID"+sep+"rating\n");
                 HashMap<String,ArrayList<String[]>> ratings = (HashMap<String,ArrayList<String[]>>)collection;
                 ratings.forEach((userID,rating_list)->{
@@ -446,7 +448,8 @@ public class Map {
             }
             case "kg":{
                 FileWriter fw = new FileWriter(dirPath+"/data/kg.csv",true);
-                System.out.println("converting kg...");
+                System.out.println("writing kg into \"kg.csv\"...");
+                if(withHead) fw.write("entityID"+sep+"relation"+sep+"entityID\n");
                 HashMap<String,ArrayList<String[]>> kg = (HashMap<String,ArrayList<String[]>>)collection;
                 kg.forEach((itemID,person_relationList)->{
                     person_relationList.forEach((person_relation)->{
@@ -457,6 +460,21 @@ public class Map {
                         }
                     });
                 });
+                fw.close();
+                break;
+            }
+            case "relations":{
+                FileWriter fw = new FileWriter(dirPath+"/data/relations.csv",true);
+                System.out.println("writing relations into \"relations.csv\"");
+                if(withHead) fw.write("relation_oldID,relation_newID\n");
+                relation_type_id.forEach((oldID,newID)->{
+                    try{
+                        fw.write(oldID+sep+newID+"\n");
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                });
+                fw.close();
                 break;
             }
         }
@@ -468,8 +486,7 @@ public class Map {
     }
 
     public static void main(String[] args){
-        init(false);
-        System.out.print(entityBeginID);
+        new Map().init(false);
     }
 
 }

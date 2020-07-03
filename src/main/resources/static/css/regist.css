@@ -1,0 +1,99 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "微软雅黑";
+}
+/*右边登陆框开始*/
+.gcs-regist {
+    position: absolute;
+    right: 0px;
+    box-sizing: border-box;
+    width: 470px;
+    height: 100%;
+    background-color: #E6E6E6;
+    z-index: 100;
+}
+.gcs-regist .gcs-regist-panel{
+    height: 360px;
+    position:absolute;
+    margin:auto;
+    left: 0;
+    right: 0;
+    top:0;
+    bottom: 0;
+}
+.gcs-regist .regist-title {
+    text-align: center;
+    color: #62a8ea;
+}
+.gcs-regist .regist-title h2 {
+    letter-spacing: 10px;
+}
+.gcs-regist-container {
+    width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 20px 0 0;
+    text-align: center;
+}
+
+.gcs-regist .input {
+    border: 1px solid white;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 80%;
+    height: 46px;
+    padding-left: 10px;
+    margin: 0 auto;
+    font-size: 14px;
+    outline: none;
+    color:  #76838f;
+}
+
+.gcs-regist .gcs-regist-validation{
+    width:80%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.gcs-regist .validation-input{
+    position: absolute;
+    width: 250px;
+    left: 0px;
+}
+
+.gcs-regist img.validation-img{
+    position: absolute;
+    cursor:pointer;
+    width: 125px;
+    height: 45px;
+    right: 0px;
+}
+
+.gcs-regist .input:focus {
+    outline: none;
+    border: 1px solid #62a8ea;
+}
+
+.gcs-regist .btn-regist {
+    background-color: #62a8ea;
+    border: none;
+    width: 80%;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.gcs-regist .btn-regist:hover{
+    opacity: 0.9;
+}
+.regist_success_status{
+    letter-spacing: 3px;
+    color: #62a8ea;
+}
+.regist_fail_status{
+    letter-spacing: 3px;
+    color: crimson;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+    <div>
+        <p>
+            访问链接地址 (<span th:text="${path}"></span>) 时出错。
+        </p>
+        <p th:text="${'错误信息: '+message}"></p>
+    </div>
+    <div th:if="${errMsg!=null}">
+        <p>
+            您可以尝试登录
+        </p>
+        <a href="/login/login_page">登录连接</a>
+    </div>
+</body>
+</html>
