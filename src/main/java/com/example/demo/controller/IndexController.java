@@ -17,4 +17,10 @@ public class IndexController {
     public String toIndex1(){
         return "index";
     }
+
+    @RequestMapping(value = "/index",method = RequestMethod.POST)
+    public String f(){
+        System.out.println("index post");
+        return "";
+    }
 }

@@ -1,99 +1,62 @@
-* {
-    padding: 0;
-    margin: 0;
-    font-family: "微软雅黑";
-}
-/*右边登陆框开始*/
-.gcs-login {
-    position: absolute;
-    right: 0px;
-    box-sizing: border-box;
-    width: 470px;
-    height: 100%;
-    background-color: #E6E6E6;
-    z-index: 100;
-}
-.gcs-login .gcs-login-panel{
-    height: 360px;
-    position:absolute;
-    margin:auto;
-    left: 0;
-    right: 0;
-    top:0;
-    bottom: 0;
-}
-.gcs-login .login-title {
-    text-align: center;
-    color: #62a8ea;
-}
-.gcs-login .login-title h2 {
-    letter-spacing: 10px;
-}
-.gcs-login-container {
-    width: 100%;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 20px 0 0;
-    text-align: center;
+body{
+    background-image: url('../images/login_background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-.gcs-login .input {
-    border: 1px solid white;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 80%;
-    height: 46px;
-    padding-left: 10px;
+#login-box{
+    width: 32%;
+    height: 28%;
     margin: 0 auto;
-    font-size: 14px;
+    margin-top:15%;
+    text-align: center ;
+    background-color: #00000080;
+    border-radius: 15px;
+    padding: 12px 50px ;
+}
+
+#login-box .form{
+    margin-top: 25px;
+}
+
+#login-box .form .item{
+    margin-top:20px;
+}
+
+#login-box .form .item input{
+    border:none;
     outline: none;
-    color:  #76838f;
-}
-
-.gcs-login .gcs-login-validation{
-    width:80%;
-    margin: 0 auto;
-    position: relative;
-}
-
-.gcs-login .validation-input{
-    position: absolute;
     width: 250px;
-    left: 0px;
+    border-bottom: 2px solid #ffffff;
+    padding:5px 10px;
+    background-color: #ffffff00;
+    color:#ffffff;
+    font-size: 15px;
 }
 
-.gcs-login img.validation-img{
-    position: absolute;
-    cursor:pointer;
-    width: 125px;
-    height: 45px;
-    right: 0px;
+#login-box .form #login-button{
+    border:0;
+    height: 35px;
+    width: 200px;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 6px;
+    background-image: linear-gradient(to right,#218373, #6d317c);
 }
-
-.gcs-login .input:focus {
-    outline: none;
-    border: 1px solid #62a8ea;
-}
-
-.gcs-login .btn-login {
-    background-color: #62a8ea;
-    border: none;
-    width: 80%;
-    height: 45px;
-    line-height: 45px;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-.gcs-login .btn-login:hover{
-    opacity: 0.9;
-}
-.login_success_status{
+.login-success-status{
     letter-spacing: 3px;
     color: #62a8ea;
 }
-.login_fail_status{
+.login-fail-status{
     letter-spacing: 3px;
     color: crimson;
+}
+#click-button{
+    border:0;
+    height: 35px;
+    width: 200px;
+    border-radius: 6px;
+    background-image: linear-gradient(to right,#218373, #6d317c);
+    font-size: 15px;
+    color: #ffffff;
 }

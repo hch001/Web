@@ -3,7 +3,6 @@ body{
 	padding:0;
 	margin:0;
 	font-family: 'Open Sans', sans-serif;
-	background:#76838f;
 }
 body a{
     transition:0.5s all;
@@ -1526,7 +1525,7 @@ p.reply i{
 		top: 0px;
 		right: 5px;
 		font-size: 14px;
-		background-color: #5bc0de;
+
 	}
 	.top-menu ul li a img {
 		width: 90%;

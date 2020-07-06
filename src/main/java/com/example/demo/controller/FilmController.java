@@ -27,8 +27,11 @@ public class FilmController {
         Object object = session.getAttribute("user");
         // session的user属性在LoginController中已经被赋值(如果已经登录的话,)，否则为空
         if(object==null) {
-            model.addAttribute("errMsg","您还没有登录，可以尝试登陆。"); // 加入错误信息
+            model.addAttribute("errMsg","您还没有登录，可以尝试登录。"); // 加入错误信息
             return "error"; // 跳转到error进行处理
+        }
+        else if(!user.equals(object)){
+            model.addAttribute("errMsg","您不能访问他人的主页");
         }
         model.addAttribute("errMsg",null); // 清除错误信息
         return "user_page";

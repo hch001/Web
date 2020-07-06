@@ -26,13 +26,16 @@ public class LoginController {
 
     @RequestMapping(value="/login_page",method = RequestMethod.GET) // 跳转到login初始页面
     public String loadLoginPage(){
+        System.out.print("login_page get");
         return "login";
     }
 
     @RequestMapping(value="/login_page" ,method = RequestMethod.POST)
     public String loginConn(@RequestParam("username") String username, @RequestParam("password") String password, // 获取前端request中的返回的登录用户名和密码
                             HttpSession session, Model model){
+        System.out.print("login_page post");
         model.addAttribute("users",null); // 先清空
+
         List<User> users = userRepository.findUsersByUsernameAndPassword(username,password); // 查询是否有效
         if(users.size()>0) {
             session.setAttribute("user",username); // 正确，在session中存储user属性，并赋值
