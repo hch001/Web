@@ -1,57 +1,50 @@
 package com.example.demo.controller;
 
+
 import com.example.demo.entity.Film;
 import com.example.demo.repository.FilmRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/main")
 public class MainController {
 
     private FilmRepository filmRepository;
-
-    @Autowired
     MainController(FilmRepository filmRepository){
         this.filmRepository=filmRepository;
     }
 
-    // 特定用户界面
-    @RequestMapping(value = "/{user}",method = RequestMethod.GET)
-    public String loadUserPage(HttpSession session, @PathVariable String user,Model model){
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    public String toIndex(HttpSession session, Model model){
         Object object = session.getAttribute("user");
-        // session的user属性在LoginController中已经被赋值(如果已经登录的话,)，否则为空
-        if(object==null) {
-            model.addAttribute("errMsg","您还没有登录，可以尝试登录。"); // 加入错误信息
-            return "error"; // 跳转到error进行处理
+        if(object==null){ // 未登录
+            List<Film> movies = filmRepository.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+            model.addAttribute("movies",movies);
+            List<Film> tvs = filmRepository.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+            model.addAttribute("tvs",tvs);
+//            movies.forEach((a)->{System.out.println("movie\t"+a.getTitle()+"\t"+a.getReleaseDate());});
+//            tvs.forEach((a)->{System.out.println("tv\t"+a.getTitle()+"\t"+a.getReleaseDate());});
+            return "main";
         }
-        else if(!user.equals(object)){
-            model.addAttribute("errMsg","您不能访问他人的主页");
+        else{
+            // 还没写基于用户的部分
         }
-        model.addAttribute("errMsg",null); // 清除错误信息
         return "main";
     }
 
-    // 特定用户界面，退出当前帐号，无效当前session
-    @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public String search(@RequestParam("title") String title,Model model) {
-        List<Film> films = filmRepository.findAllByTitleIsContaining(title);
-        model.addAttribute("searchResult",films);
-        return "main";
+    @RequestMapping(value="/main",method = RequestMethod.GET)
+    public String toIndex1(){
+        return "redirect:/";
     }
 
-    @RequestMapping(value = "/exit",method = RequestMethod.GET)
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/login/login_page";
+    @RequestMapping(value="/main/",method = RequestMethod.GET)
+    public String toIndex2(){
+        return "redirect:/";
     }
 
 }

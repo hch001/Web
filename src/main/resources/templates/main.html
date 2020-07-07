@@ -9,11 +9,13 @@
 
     <div class="header-container">
         <div class="user-head">
-            <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;">
+            <div style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;float: left" class="user-head-msg">
                 <a th:href="@{/login/register_page}">注册</a>
                 <a th:href="@{/login/login_page}">登录</a>
                 <a th:href="@{/main/exit}">退出账号</a>
-                <i class="fa fa-user-circle" aria-hidden="true"></i><span>username</span>
+            </div>
+            <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;" class="user-head-msg">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span>username</span>
             </div>
         </div>
         <div class="search-head">
@@ -25,30 +27,13 @@
         </div>
     </div>
 
-    <div class="hot-items-container" th:if="${films!=null}">
-
-        <h3>近期热门</h3>
-        <hr >
-
-        <div th:each="film : ${films}">
-            <div class="film-container">
-                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
-                <div>
-                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${film.title}">HAMILTON</a>
-                    <span class="rating" th:text="${film.rating}">8.5</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
     <div class="tags-container">
-        <h3>更多分类</h3>
+        <span><b>更多分类</b></span>
         <hr>
 
         <div >
             <div>
-                <span><b>地区:</b></span>
+                <span>&nbsp&nbsp&nbsp</span><span><b>地区:</b></span>
             </div>
 
             <div>
@@ -79,7 +64,7 @@
 
         <div>
             <div>
-                <span><b>类型:</b></span>
+                <span>&nbsp&nbsp&nbsp</span><span><b>类型:</b></span>
             </div>
 
             <div>
@@ -98,9 +83,45 @@
 
     </div>
 
+
+    <div class="hot-items-container" th:if="${movies!=null}">
+
+        <span><b>近期热门电影</b></span>
+        <hr >
+
+        <div th:each="movie : ${movies}">
+            <div class="film-container">
+                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <div>
+                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${movie.title}">HAMILTON</a>
+                    <span class="rating" th:text="${movie.rating}">8.5</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="hot-items-container" th:if="${tvs!=null}">
+
+        <span><b>近期热门电视剧</b></span>
+        <hr >
+
+        <div th:each="tv : ${tvs}">
+            <div class="film-container">
+                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <div>
+                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${tv.title}">HAMILTON</a>
+                    <span class="rating" th:text="${tv.rating}">8.5</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
     <div class="recommend-area">
-        <div style="background-color: rgb(242, 247, 246);height: 50px;padding:15px auto ;">
-            <h2 style="text-align: center;color: rgb(51,119,170);">为您推荐</h2>
+        <div style="background-color: rgb(242, 247, 246);height: 25px;padding:8px ;text-align: center">
+            <span style="color: rgb(51,119,170);"><b>为您推荐</b></span>
         </div>
         <hr>
 
@@ -152,5 +173,9 @@
         </div>
     </div>
 
+    <div class="bottom">
+        <hr>
+        <span style="font-size: 12px;margin-top: 0;">CopyRight</span>
+    </div>
 
 </body>
