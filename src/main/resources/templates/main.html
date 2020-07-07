@@ -7,225 +7,150 @@
 
 <body>
 
-<div class="header-container">
-    <div class="user-head">
-        <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;">
-            <a th:href="@{/login/register_page}">注册</a>
-            <a th:href="@{/login/login_page}">登录</a>
-            <a th:href="@{/main/exit}">退出账号</a>
-            <i class="fa fa-user-circle" aria-hidden="true"></i><span>username</span>
-        </div>
-    </div>
-    <div class="search-head">
-        <i class="fa fa-film" aria-hidden="true" style="font-size: 50px;float: left;"></i>
-        <form  method="POST" style="float: left;">
-            <input type="text" id="search" name="search" placeholder="搜索电影、电视剧、综艺等">
-            <input type="submit" value="">
-        </form>
-    </div>
-</div>
-
-<div class="hot-items-container" th:if="${films!=null}">
-
-    <h3>近期热门</h3>
-    <hr >
-
-    <div th:each="film : ${films}">
-        <div class="film-container">
-            <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
-            <div>
-                <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${film.title}">HAMILTON</a>
-                <span class="rating" th:text="${film.rating}">8.5</span>
+    <div class="header-container">
+        <div class="user-head">
+            <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;">
+                <a th:href="@{/login/register_page}">注册</a>
+                <a th:href="@{/login/login_page}">登录</a>
+                <a th:href="@{/main/exit}">退出账号</a>
+                <i class="fa fa-user-circle" aria-hidden="true"></i><span>username</span>
             </div>
         </div>
+        <div class="search-head">
+            <i class="fa fa-film" aria-hidden="true" style="font-size: 50px;float: left;"></i>
+            <form  method="POST" style="float: left;">
+                <input type="text" id="search" name="search" placeholder="搜索电影、电视剧、综艺等">
+                <input type="submit" value="">
+            </form>
+        </div>
     </div>
 
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="hot-items-container" th:if="${films!=null}">
 
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
+        <h3>近期热门</h3>
+        <hr >
 
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="film-container">-->
-<!--        <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">-->
-<!--        <div>-->
-<!--            <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala">HAMILTON</a>-->
-<!--            <span class="rating">8.5</span>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
-
-
-</div>
-
-<div class="tags-container">
-    <h3>更多分类</h3>
-    <hr>
-
-    <div >
-        <div>
-            <span><b>地区:</b></span>
-        </div>
-
-        <div>
-            <a href="fasdf">国产</a><span>&nbsp</span>
-        </div>
-
-        <div>
-            <a href="fasdf">美剧</a><span>&nbsp</span>
-        </div>
-
-        <div>
-            <a href="fasfds">英剧</a><span>&nbsp</span>
-        </div>
-
-        <div>
-            <a href="fasfds">日剧</a><span>&nbsp</span>
-        </div>
-
-        <div>
-            <a href="fasfds">韩剧</a><span>&nbsp</span>
-        </div>
-
-        <div>
-            <a href="fasfds">港剧</a><span>&nbsp</span>
+        <div th:each="film : ${films}">
+            <div class="film-container">
+                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <div>
+                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${film.title}">HAMILTON</a>
+                    <span class="rating" th:text="${film.rating}">8.5</span>
+                </div>
+            </div>
         </div>
 
     </div>
 
-    <div>
-        <div>
-            <span><b>类型:</b></span>
+    <div class="tags-container">
+        <h3>更多分类</h3>
+        <hr>
+
+        <div >
+            <div>
+                <span><b>地区:</b></span>
+            </div>
+
+            <div>
+                <a href="fasdf">国产</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasdf">美剧</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">英剧</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">日剧</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">韩剧</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">港剧</a><span>&nbsp</span>
+            </div>
+
         </div>
 
         <div>
-            <a href="fasfds">动漫</a><span>&nbsp</span>
+            <div>
+                <span><b>类型:</b></span>
+            </div>
+
+            <div>
+                <a href="fasfds">动漫</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">综艺</a><span>&nbsp</span>
+            </div>
+
+            <div>
+                <a href="fasfds">纪录片</a><span>&nbsp</span>
+            </div>
         </div>
 
-        <div>
-            <a href="fasfds">综艺</a><span>&nbsp</span>
-        </div>
 
-        <div>
-            <a href="fasfds">纪录片</a><span>&nbsp</span>
-        </div>
     </div>
 
+    <div class="recommend-area">
+        <div style="background-color: rgb(242, 247, 246);height: 50px;padding:15px auto ;">
+            <h2 style="text-align: center;color: rgb(51,119,170);">为您推荐</h2>
+        </div>
+        <hr>
 
-</div>
-
-<div class="recommend-area">
-    <div style="background-color: rgb(242, 247, 246);height: 50px;padding:15px auto;">
-        <h2 style="text-align: center;color: rgb(51,119,170);">为您推荐</h2>
+        <div>
+            <table>
+                <tbody>
+                <tr>
+                    <td class="order">1</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                <tr>
+                    <td class="order">2</td>
+                    <td class="title">密密麻麻的</td>
+                </tr>
+                <tr>
+                    <td class="order">3</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                <tr>
+                    <td class="order">4</td>
+                    <td class="title">密密麻麻的</td>
+                </tr>
+                <tr>
+                    <td class="order">5</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                <tr>
+                    <td class="order">6</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                <tr>
+                    <td class="order">7</td>
+                    <td class="title">密密麻麻的</td>
+                </tr>
+                <tr>
+                    <td class="order">8</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                <tr>
+                    <td class="order">9</td>
+                    <td class="title">密密麻麻的</td>
+                </tr>
+                <tr>
+                    <td class="order">10</td>
+                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <hr>
-
-    <div>
-        <table>
-            <tbody>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            <tr>
-                <td class="order">2</td>
-                <td class="title">密密麻麻的</td>
-            </tr>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            <tr>
-                <td class="order">2</td>
-                <td class="title">密密麻麻的</td>
-            </tr>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            <tr>
-                <td class="order">2</td>
-                <td class="title">密密麻麻的</td>
-            </tr>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            <tr>
-                <td class="order">2</td>
-                <td class="title">密密麻麻的</td>
-            </tr>
-            <tr>
-                <td class="order">1</td>
-                <td class="title"><a>想哭的我戴上了猫的面具</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
 
 
 </body>
