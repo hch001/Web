@@ -772,6 +772,7 @@ div#portfoliolist {
   display: block;
   overflow: hidden;
   visibility: hidden;
+	background-color: #76838f;
   width: 0;
   height: 0; 
 }
@@ -818,10 +819,8 @@ div#portfoliolist {
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
 	-ms-transition:0.5s all;
-}					  
-#filters li {
-	display: -webkit-inline-box;
 }
+
 .zoom-icon {
 	position:absolute;
 	top:15px;

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Film;
 import com.example.demo.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,17 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users")
-public class FilmController {
+@RequestMapping(value = "/main")
+public class MainController {
 
     private FilmRepository filmRepository;
 
     @Autowired
-    FilmController(FilmRepository filmRepository){
+    MainController(FilmRepository filmRepository){
         this.filmRepository=filmRepository;
     }
 
@@ -34,13 +37,21 @@ public class FilmController {
             model.addAttribute("errMsg","您不能访问他人的主页");
         }
         model.addAttribute("errMsg",null); // 清除错误信息
-        return "user_page";
+        return "main";
     }
 
     // 特定用户界面，退出当前帐号，无效当前session
-    @RequestMapping(value = "/{user}",method = RequestMethod.POST)
-    public String logout(HttpSession session, @PathVariable String user){
-        session.invalidate();
-        return "user_page";
+    @RequestMapping(value = "/{user}", method = RequestMethod.POST)
+    public String search(@RequestParam("title") String title,Model model) {
+        List<Film> films = filmRepository.findAllByTitleIsContaining(title);
+        model.addAttribute("searchResult",films);
+        return "main";
     }
+
+    @RequestMapping(value = "/exit",method = RequestMethod.GET)
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login/login_page";
+    }
+
 }

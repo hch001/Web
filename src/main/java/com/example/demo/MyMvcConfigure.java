@@ -9,6 +9,6 @@ public class MyMvcConfigure implements WebMvcConfigurer {
 
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/error","/index.html","/","/login","/old_login.html");
+//        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/error","/main.html","/","/login","/old_login.html");
 //    }
 }
