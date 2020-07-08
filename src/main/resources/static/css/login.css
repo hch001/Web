@@ -1,5 +1,5 @@
 body{
-     background-image: url('../images/login_background-2.png');
+     background-image: url('../images/login_background.png');
      background-repeat: no-repeat;
      background-size: 100% 100%;
  }
@@ -41,7 +41,7 @@ body{
     color: #ffffff;
     font-size: 15px;
     border-radius: 6px;
-    background-image: linear-gradient(to right,#218373, #6d317c);
+    background-image: linear-gradient(to right,#e081c9, #cbdd99);
 }
 a{
     text-decoration-line: none;
@@ -54,15 +54,15 @@ a{
     letter-spacing: 3px;
     color: crimson;
 }
-#click-button{
-    border:0;
-    height: 35px;
-    width: 200px;
-    border-radius: 6px;
-    background-image: linear-gradient(to right,#218373, #6d317c);
-    font-size: 15px;
-    color: #ffffff;
-}
+/*#click-button{*/
+/*    border:0;*/
+/*    height: 35px;*/
+/*    width: 200px;*/
+/*    border-radius: 6px;*/
+/*    background-image: linear-gradient(to right,#218373, #6d317c);*/
+/*    font-size: 15px;*/
+/*    color: #ffffff;*/
+/*}*/
 .btn-container{
     height: 36px;
     width: 200px;

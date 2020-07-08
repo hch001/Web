@@ -33,11 +33,11 @@ public class FilmController  {
     }
 
     @RequestMapping(value = "/{filmId}",method = RequestMethod.POST)
-    public String collectInterest(@PathVariable String filmId, @RequestParam("like") String like,@RequestParam("notLike") String notLike,HttpSession session){
-        System.out.println("Film POST");
-        System.out.println(session.getAttribute("user"));
-        System.out.println(like);
-        System.out.println(notLike);
+    public String collectInterest(@PathVariable String filmId){
+//        System.out.println("Film POST");
+//        System.out.println(session.getAttribute("user"));
+//        System.out.println(like);
+//        System.out.println(notLike);
 
         return "redirect:/film/{filmId}";
     }

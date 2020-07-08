@@ -43,7 +43,7 @@ public class MainController {
 
     @RequestMapping(value="/",method = RequestMethod.POST)
     public String search(@RequestParam("search") String search,Model model){
-        List<Film> result = filmRepository.findAllByTitleIsContaining(search);
+        List<Film> result = filmRepository.findAllByTitleContains(search);
         model.addAttribute("result",null);
         model.addAttribute("result",result);
         return "main";

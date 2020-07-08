@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -48,6 +51,14 @@ public class UserController {
     public String logout(HttpSession session){
         session.invalidate();
         return "redirect:/login/login_page";
+    }
+
+    @RequestMapping(value="/{user}",method = RequestMethod.POST)
+    public String search(@RequestParam("search") String search, Model model)  {
+        List<Film> result = filmRepository.findAllByTitleContains(search);
+        model.addAttribute("result",null);
+        model.addAttribute("result",result);
+        return "main";
     }
 
 }

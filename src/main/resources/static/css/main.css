@@ -22,6 +22,13 @@ body{
     margin: 0px 300px; /*llllllllllllllllllllllll*/
     padding: 18px 20px; /*llllllllllllllllllllllll*/
 }
+#neko{
+    height: 7%;
+    width: auto;
+    position: absolute;
+    top:30px;
+    right:420px;
+}
 form{
     /* background-color: black; */
     margin: 3px 20px; /*llllllllllllllllllllllll*/
@@ -66,7 +73,7 @@ form input[type="submit"]{
     height: 154px; /*llllllllllllllllllllllll*/
     /* background-color: grey; */
     float: left;
-    margin: 13px 20px; /*llllllllllllllllllllllll*/
+    margin: 13px 20px 20px 20px; /*llllllllllllllllllllllll*/
 }
 .film-container div{
     text-align: center;
