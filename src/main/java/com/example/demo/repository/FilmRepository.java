@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film,Long> {
-    @Query(value = "select * from film where title REGEXP ?1 ",nativeQuery = true)
+    @Query(value = "select * from film where INSTR(title, ?1 ) ",nativeQuery = true)
     List<Film> findAllByTitleContains(String title);
 
     List<Film> findByFilmId(Long filmId);

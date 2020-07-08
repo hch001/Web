@@ -43,7 +43,9 @@ public class MainController {
 
     @RequestMapping(value="/",method = RequestMethod.POST)
     public String search(@RequestParam("search") String search,Model model){
+        System.out.println("search"+search);
         List<Film> result = filmRepository.findAllByTitleContains(search);
+        result.forEach((a)->System.out.println(a.getTitle()));
         model.addAttribute("result",null);
         model.addAttribute("result",result);
         return "main";

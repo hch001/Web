@@ -19,7 +19,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     @Autowired
-    public LoginController(UserRepository userRepository,ValidationImgRepository validationImgRepository){
+    public LoginController(UserRepository userRepository){
         this.userRepository=userRepository;
     }
 
