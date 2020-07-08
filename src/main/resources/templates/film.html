@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head xmlns:th="http://www.w3.org/1999/xhtml">
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/css/film.css}">
+</head>
+
+<body>
+
+    <div class="header-container">
+        <div class="user-head">
+            <div style="text-align: left;font-size: small;color: #d5d5d5;padding: 0px 20px;float: left;">
+                <a th:href="@{/login/register_page}">注册</a>
+                <a th:href="@{/login/login_page}">登录</a>
+                <a th:href="@{/main/exit}">退出账号</a>
+                <a th:href="@{/main/}">返回主页</a>
+            </div>
+            <div  style="text-align: right;font-size: small;color: #d5d5d5;padding: 0px 20px;">
+                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${user}">username</span>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="not-found" th:if="${films!=null and #lists.isEmpty(films)}">
+        <h2>Not found.</h2>
+    </div>
+
+    <div class="item-container" th:href="${films!=null and #lists.size(films)>0}">
+
+        <div>
+            <img th:src="@{/images/m1.jpg}" id="poster">
+        </div>
+
+        <div class="item">
+
+            <div class="attribute" >
+                <label><b>Title:</b></label> <span>&nbsp</span>
+                <span class="value" th:text="${films[0].title}"></span>
+            </div>
+
+            <div class="attribute" th:if="${films[0].releaseDate!=null}">
+                <label><b>releaseDate:</b></label> <span>&nbsp</span>
+                <span class="value" th:text="${films[0].releaseDate}"></span>
+            </div>
+
+            <div class="attribute" th:if="${films[0].rating!=null}">
+                <label><b>Rating:</b></label> <span>&nbsp</span>
+                <span class="value" th:text="${films[0].releaseDate}"></span>
+            </div>
+
+            <div class="attribute" th:if="${films[0].genres!=null}">
+                <label><b>Genres:</b></label> <span>&nbsp</span>
+                <span class="value" th:text="${films[0].genres}"></span>
+            </div>
+
+            <div class="attribute" th:if="${films[0].description!=null}">
+                <label><b>Description:</b></label> <br><span>&nbsp;</span>
+                <span class="value" th:text="${films[0].description}"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="like-area">
+        <form method="POST">
+            <input type="submit" id="like-btn" value="" name="like" title="喜欢">
+            <input type="submit" id="not-like-btn" value="" name="notLike" title="不喜欢">
+        </form>
+    </div>
+
+</body>
+
+</html>

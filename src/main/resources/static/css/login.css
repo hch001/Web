@@ -1,8 +1,8 @@
 body{
-    background-image: url('../images/login_background.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-}
+     background-image: url('../images/login_background-2.png');
+     background-repeat: no-repeat;
+     background-size: 100% 100%;
+ }
 
 #login-box{
     width: 32%;
@@ -43,6 +43,9 @@ body{
     border-radius: 6px;
     background-image: linear-gradient(to right,#218373, #6d317c);
 }
+a{
+    text-decoration-line: none;
+}
 .login-success-status{
     letter-spacing: 3px;
     color: #62a8ea;
@@ -59,4 +62,13 @@ body{
     background-image: linear-gradient(to right,#218373, #6d317c);
     font-size: 15px;
     color: #ffffff;
+}
+.btn-container{
+    height: 36px;
+    width: 200px;
+    margin-left: 170px;
+    float: left;
+}
+input::-webkit-input-placeholder{
+    color: rgb(206, 206, 206);
 }

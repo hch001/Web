@@ -13,6 +13,7 @@ body{
 .user-head div a{
     margin-left: 10px;
     color:#d5d5d5;
+    text-decoration-line: none;
 }
 .search-head{
     /* background-color: aqua; */
@@ -47,6 +48,7 @@ form input[type="submit"]{
     margin-left: -4px; /*llllllllllllllllllllllll*/
     border: none;
     background:url('../images/search.png') no-repeat  0px 0px;
+    outline:none;
     border-radius: 3px;
     border-bottom: 2px solid rgb(214,214,214);
     background-size:contain;
@@ -54,8 +56,8 @@ form input[type="submit"]{
 .hot-items-container{
     /* background-color: aquamarine; */
     width: 45%;
-    height: 40%;
-    margin: 20px 30% 20px 17%;
+    height: 43%;
+    margin: 20px 30% 28px 17%;
     padding-top:2px;
     padding-left: 10px;
 }
@@ -136,10 +138,10 @@ tr{
 .title{
     color: rgb(51, 119, 170);
 }
-.bottom{
-    /* border: 1px solid #000000; */
+footer{
     width: 45%;
     height: 8%;
-    margin: 50px 30% 20px 17%;
+    margin-left: 17%;
+    margin-right: 30%;
     text-align: center;
 }

@@ -2,20 +2,44 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
     <title>Error</title>
+    <style>
+        .outer{
+            text-align: center;
+            margin: 4% auto;
+            width: 50%;
+            height: 600px;
+        }
+        .outer i{
+            font-size: 80px;
+            color: rgb(93,98,103);
+        }
+        .inner{
+            font-size: 20px;
+            color: rgb(51, 119, 170);
+        }
+        a{
+            text-decoration-line: none;
+        }
+    </style>
 </head>
+
 <body>
-    <div>
-        <p>
-            访问链接地址 (<span th:text="${path}"></span>) 时出错。
-        </p>
-        <p th:text="${'错误信息: '+message}"></p>
-    </div>
-    <div th:if="${errMsg!=null}">
-        <p>
-            您可以尝试登录
-        </p>
-        <a href="/login/login_page">登录连接</a>
+    <div class="outer">
+        <i class="fa fa-ban"  aria-hidden="true" ></i>
+        <div class="inner">
+            <p>
+                访问链接地址 (<span th:text="${path}"></span>) 时出错。
+            </p>
+            <p th:text="${'错误信息: '+message}"></p>
+        </div>
+        <div class="inner" th:if="${errMsg!=null}">
+            <p th:text="${errMsg}">
+            </p>
+            <a th:href="@{/login/login_page}">登录</a>
+            <a th:href="@{/main}">返回主页</a>
+        </div>
     </div>
 </body>
 </html>

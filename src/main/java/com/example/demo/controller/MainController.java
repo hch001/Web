@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -22,18 +23,11 @@ public class MainController {
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String toIndex(HttpSession session, Model model){
         Object object = session.getAttribute("user");
-        if(object==null){ // 未登录
-            List<Film> movies = filmRepository.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
-            model.addAttribute("movies",movies);
-            List<Film> tvs = filmRepository.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
-            model.addAttribute("tvs",tvs);
-//            movies.forEach((a)->{System.out.println("movie\t"+a.getTitle()+"\t"+a.getReleaseDate());});
-//            tvs.forEach((a)->{System.out.println("tv\t"+a.getTitle()+"\t"+a.getReleaseDate());});
-            return "main";
-        }
-        else{
-            // 还没写基于用户的部分
-        }
+        List<Film> movies = filmRepository.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        model.addAttribute("movies",movies);
+        List<Film> tvs = filmRepository.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        model.addAttribute("tvs",tvs);
+        // 还没写完推荐的部分
         return "main";
     }
 
@@ -45,6 +39,14 @@ public class MainController {
     @RequestMapping(value="/main/",method = RequestMethod.GET)
     public String toIndex2(){
         return "redirect:/";
+    }
+
+    @RequestMapping(value="/",method = RequestMethod.POST)
+    public String search(@RequestParam("search") String search,Model model){
+        List<Film> result = filmRepository.findAllByTitleIsContaining(search);
+        model.addAttribute("result",null);
+        model.addAttribute("result",result);
+        return "main";
     }
 
 }

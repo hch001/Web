@@ -15,7 +15,7 @@
                 <a th:href="@{/main/exit}">退出账号</a>
             </div>
             <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;" class="user-head-msg">
-                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span>username</span>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${user}">username</span>
             </div>
         </div>
         <div class="search-head">
@@ -83,8 +83,7 @@
 
     </div>
 
-
-    <div class="hot-items-container" th:if="${movies!=null}">
+    <div class="hot-items-container" th:if="${movies!=null and result==null}">
 
         <span><b>近期热门电影</b></span>
         <hr >
@@ -93,15 +92,14 @@
             <div class="film-container">
                 <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
                 <div>
-                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${movie.title}">HAMILTON</a>
+                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{'/film/'+${movie.filmId}}" th:text="${movie.title}">HAMILTON</a>
                     <span class="rating" th:text="${movie.rating}">8.5</span>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <div class="hot-items-container" th:if="${tvs!=null}">
+    <div class="hot-items-container" th:if="${tvs!=null and result==null}">
 
         <span><b>近期热门电视剧</b></span>
         <hr >
@@ -110,7 +108,7 @@
             <div class="film-container">
                 <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
                 <div>
-                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" href="balabala" th:text="${tv.title}">HAMILTON</a>
+                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{/film/'+${tv.filmId}}" th:text="${tv.title}">HAMILTON</a>
                     <span class="rating" th:text="${tv.rating}">8.5</span>
                 </div>
             </div>
@@ -118,6 +116,28 @@
 
     </div>
 
+    <div class="hot-items-container" th:if="${result!=null}">
+
+        <div th:if="${#lists.isEmpty(result)}" style="text-align: center">
+            <br>
+            <span><b>没有找到您想要的资源哦</b></span>
+        </div>
+
+        <div th:if="${#lists.size(result)>0}">
+            <span><b>查询结果如下</b></span>
+            <hr>
+            <div th:each="film :${result}">
+                <div class="film-container">
+                    <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                    <div>
+                        <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
+                        <span class="rating" th:if="${film.rating!=null}" th:text="${film.rating}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
     <div class="recommend-area">
         <div style="background-color: rgb(242, 247, 246);height: 25px;padding:8px ;text-align: center">
@@ -134,7 +154,7 @@
                 </tr>
                 <tr>
                     <td class="order">2</td>
-                    <td class="title">密密麻麻的</td>
+                    <td class="title">想哭的我脱下了猫的面具</td>
                 </tr>
                 <tr>
                     <td class="order">3</td>
@@ -142,7 +162,7 @@
                 </tr>
                 <tr>
                     <td class="order">4</td>
-                    <td class="title">密密麻麻的</td>
+                    <td class="title">想哭的我脱下了猫的面具</td>
                 </tr>
                 <tr>
                     <td class="order">5</td>
@@ -150,32 +170,37 @@
                 </tr>
                 <tr>
                     <td class="order">6</td>
-                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                    <td class="title"><a>想哭的我脱下了猫的面具</a></td>
                 </tr>
                 <tr>
                     <td class="order">7</td>
-                    <td class="title">密密麻麻的</td>
+                    <td class="title">想哭的我戴上了猫的面具</td>
                 </tr>
                 <tr>
                     <td class="order">8</td>
-                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                    <td class="title"><a>想哭的我脱下了猫的面具</a></td>
                 </tr>
                 <tr>
                     <td class="order">9</td>
-                    <td class="title">密密麻麻的</td>
+                    <td class="title">想哭的我戴上了猫的面具</td>
                 </tr>
                 <tr>
                     <td class="order">10</td>
-                    <td class="title"><a>想哭的我戴上了猫的面具</a></td>
+                    <td class="title"><a>想哭的我脱下了猫的面具</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="bottom">
+    <footer style="    width: 45%;
+    height: 8%;
+    margin-top: 50px;
+    margin-left: 17%;
+    margin-right: 30%;
+    text-align: center;">
         <hr>
         <span style="font-size: 12px;margin-top: 0;">CopyRight</span>
-    </div>
+    </footer>
 
 </body>

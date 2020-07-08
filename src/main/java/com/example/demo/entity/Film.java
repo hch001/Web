@@ -15,7 +15,7 @@ public class Film {
     private String area;
     private String language;
     private String genres;
-    private float rating;
+    private Float rating;
     private String description;
     private String type;
 
@@ -43,7 +43,7 @@ public class Film {
         this.genres = genres;
     }
 
-    public void setRating(float rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
@@ -79,7 +79,7 @@ public class Film {
         return genres;
     }
 
-    public float getRating() {
+    public Float getRating() {
         return rating;
     }
 

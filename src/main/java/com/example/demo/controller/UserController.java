@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -37,17 +36,14 @@ public class UserController {
             model.addAttribute("errMsg","您不能访问他人的主页");
         }
         model.addAttribute("errMsg",null); // 清除错误信息
+        List<Film> movies = filmRepository.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        model.addAttribute("movies",movies);
+        List<Film> tvs = filmRepository.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        model.addAttribute("tvs",tvs);
         return "main";
     }
 
     // 特定用户界面，退出当前帐号，无效当前session
-    @RequestMapping(value = "/{user}", method = RequestMethod.POST)
-    public String search(@RequestParam("title") String title,Model model) {
-        List<Film> films = filmRepository.findAllByTitleIsContaining(title);
-        model.addAttribute("searchResult",films);
-        return "main";
-    }
-
     @RequestMapping(value = "/exit",method = RequestMethod.GET)
     public String logout(HttpSession session){
         session.invalidate();

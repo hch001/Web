@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film,Long> {
+    List<Film> findAllByTitleContains(String title);
     List<Film> findAllByTitleIsContaining(String title);
-    List<Film> findByRatingGreaterThanEqual(float rating);
+    List<Film> findByFilmId(Long filmId);
+
     @Query(value="select * from film where rating > ?1 and `type`='movie' order by release_date DESC limit ?2",nativeQuery = true)
     List<Film> findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(int rating,int limit);
 
