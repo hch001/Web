@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Film;
-import com.example.demo.repository.FilmRepository;
 import com.example.demo.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,21 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/main")
 public class UserController {
-
+    @Resource
     private FilmService filmService;
 
-    @Autowired
-    UserController(FilmService filmService){
-        this.filmService=filmService;
-    }
 
     // 特定用户界面
     @RequestMapping(value = "/{user}",method = RequestMethod.GET)

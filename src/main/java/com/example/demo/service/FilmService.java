@@ -3,11 +3,13 @@ package com.example.demo.service;
 import com.example.demo.entity.Film;
 import com.example.demo.repository.FilmRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional
 public class FilmService {
     @Resource
     private FilmRepository filmRepository;

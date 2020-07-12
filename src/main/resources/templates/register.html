@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/font-awesome.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
-
 </head>
 
 <body>
@@ -15,36 +14,43 @@
     <h1 style="color: #ffffff;">注册</h1>
     <form class="form" method="post">
 
-        <div class="item" th:unless="${users!=null and #lists.size(users)==0}">
+        <div class="item" th:if="${valid!=0}">
             <i class="fa fa-user-circle" style="color: #ffffff;"></i>
             <input type="text" name="username" placeholder="Username" style="color: #ffffff;"><br>
         </div>
-        <div class="item" th:unless="${users!=null and #lists.size(users)==0}">
+        <div class="item" th:if="${valid!=0}">
             <i class="fa fa-key" aria-hidden="true" style="color: #ffffff;"></i>
             <input type="password" name="password" class="password" placeholder="Password"><br>
         </div>
         <br>
         <br>
-        <div class="btn-container" th:unless="${users!=null and #lists.size(users)==0}">
-            <input id="login-button" type="submit" value="注册" >
+
+        <div class="btn-container" th:if="${valid!=0}">
+            <input id="login-button" type="submit" value="注册"  >
         </div>
-        <div style="float: right;margin-top: 14px;" th:unless="${users!=null and #lists.size(users)==0}">
+
+        <div class="item" th:if="${valid!=0}" style="float: right;margin-top: 14px;">
             <a th:href="@{/main}"> 进入主页</a>
             <a th:href="@{/login/login_page}">登录</a>
         </div>
 
-        <div  th:if="${users!=null}">
-            <div  th:if="${#lists.size(users)>0}" style="clear: left">
+        <div class="item" th:if="${valid!=3}">
+            <div th:if="${valid==1}" style="clear: left;">
                 <div class="login-fail-status" >
                     <span >用户名已存在</span>
                 </div>
             </div>
-            <div  th:if="${#lists.size(users)==0}">
-                <div th:each="user : ${users}">
-                    <div class="login-success-status">
-                        <span th:text="'注册成功，欢迎您 '+${user.username}"></span>
-                    </div>
+
+            <div th:if="${valid==2}" style="clear:left;">
+                <div class="login-fail-status">
+                    <span>请输入合法的用户名密码，用户名不少于2位，密码不少于8位且要包含大写字母和数字</span>
                 </div>
+            </div>
+
+            <div th:if="${valid==0}">
+                    <div class="login-success-status">
+                        <span th:text="注册成功，欢迎您"></span>
+                    </div>
                 <br/><br/><br/>
                 <a th:href="@{/login/login_page}" style="color: rgb(51, 119, 170);">
                     点击登录

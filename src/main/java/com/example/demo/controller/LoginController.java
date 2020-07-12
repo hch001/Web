@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,19 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/login") // 路由
 public class LoginController {
-
+    @Resource
     private UserService userService;
-
-    @Autowired
-    public LoginController(UserService userService){
-        this.userService=userService;
-    }
 
     @RequestMapping(value="/login_page",method = RequestMethod.GET) // 跳转到login初始页面
     public String loadLoginPage(){
@@ -45,22 +40,19 @@ public class LoginController {
 
     // 跳转到register初始页面
     @RequestMapping(value="/register_page",method = RequestMethod.GET)
-    public String loadRegisterPage(){
+    public String loadRegisterPage(Model model){
+        model.addAttribute("valid",3); //
         return "register";
     }
 
     // 用于处理register页面的POST请求，即注册信息
     @RequestMapping(value = "/register_page",method = RequestMethod.POST)
     public String registerConn(@RequestParam("username") String username,@RequestParam("password") String password,Model model,User newUser){
-        model.addAttribute("users",null); // 清空
-        List<User> users = userService.findUsersByUsername(username); // 已存在的用户
-        if(users.isEmpty()){
-            newUser.setPassword(password);
-            newUser.setUsername(username);
-            userService.save(newUser); // 将新创建的用户存储到数据库
-            model.addAttribute("user",newUser); // 返回新创建的用户
-        }
-        model.addAttribute("users",users); // 返回查询结果，users的长度 (=0 说明数据库中没有，可以创建) (>0 用户名已经存在，不能创建) 由前端进行判断
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        int valid = userService.save(newUser);
+        model.addAttribute("valid",valid);
+        System.out.println("valid:"+valid);
         return "register";
     }
 

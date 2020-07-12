@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 
 import com.example.demo.entity.Film;
-import com.example.demo.repository.FilmRepository;
 import com.example.demo.service.FilmService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class MainController {
-
+    @Resource
     private FilmService filmService;
-    MainController(FilmService filmService){
-        this.filmService=filmService;
-    }
+
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String toIndex(HttpSession session, Model model){
