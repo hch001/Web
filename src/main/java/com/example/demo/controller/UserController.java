@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Film;
 import com.example.demo.repository.FilmRepository;
+import com.example.demo.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +20,11 @@ import java.util.List;
 @RequestMapping(value = "/main")
 public class UserController {
 
-    private FilmRepository filmRepository;
+    private FilmService filmService;
 
     @Autowired
-    UserController(FilmRepository filmRepository){
-        this.filmRepository=filmRepository;
+    UserController(FilmService filmService){
+        this.filmService=filmService;
     }
 
     // 特定用户界面
@@ -39,9 +40,9 @@ public class UserController {
             model.addAttribute("errMsg","您不能访问他人的主页");
         }
         model.addAttribute("errMsg",null); // 清除错误信息
-        List<Film> movies = filmRepository.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        List<Film> movies = filmService.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
         model.addAttribute("movies",movies);
-        List<Film> tvs = filmRepository.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
+        List<Film> tvs = filmService.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
         model.addAttribute("tvs",tvs);
         return "main";
     }
@@ -55,7 +56,7 @@ public class UserController {
 
     @RequestMapping(value="/{user}",method = RequestMethod.POST)
     public String search(@RequestParam("search") String search, Model model)  {
-        List<Film> result = filmRepository.findAllByTitleContains(search);
+        List<Film> result = filmService.findAllByTitleContains(search);
         model.addAttribute("result",null);
         model.addAttribute("result",result);
         return "main";

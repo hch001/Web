@@ -33,12 +33,13 @@
                     <a th:href="@{/login/register_page}">注册</a>
                 </div>
 
-                <div  th:if="${users!=null}">
+                <div  th:if="${users!=null}" style="clear:left;">
                     <div  th:if="${#lists.isEmpty(users)}">
                         <div class="login-fail-status" >
                             <span >用户名不存在或密码错误</span>
                         </div>
                     </div>
+
                     <div  th:if="${#lists.size(users)>0}">
                         <div th:each="user : ${users}">
                             <div class="login-success-status">
@@ -50,8 +51,8 @@
                             点击进入
                         </a>
                     </div>
+                </div>
 
-            </div>
         </form>
 
     </div>

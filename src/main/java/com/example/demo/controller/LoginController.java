@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +17,11 @@ import java.util.List;
 @RequestMapping(value = "/login") // 路由
 public class LoginController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public LoginController(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public LoginController(UserService userService){
+        this.userService=userService;
     }
 
     @RequestMapping(value="/login_page",method = RequestMethod.GET) // 跳转到login初始页面
@@ -33,7 +34,7 @@ public class LoginController {
                             HttpSession session, Model model){
         model.addAttribute("users",null); // 先清空
 
-        List<User> users = userRepository.findUsersByUsernameAndPassword(username,password); // 查询是否有效
+        List<User> users = userService.findUsersByUsernameAndPassword(username,password); // 查询是否有效
         if(users.size()>0) {
             session.setAttribute("user",username); // 正确，在session中存储user属性，并赋值
             session.setMaxInactiveInterval(36000); // 设置session失效的时间，10h
@@ -52,11 +53,11 @@ public class LoginController {
     @RequestMapping(value = "/register_page",method = RequestMethod.POST)
     public String registerConn(@RequestParam("username") String username,@RequestParam("password") String password,Model model,User newUser){
         model.addAttribute("users",null); // 清空
-        List<User> users = userRepository.findUsersByUsername(username); // 已存在的用户
+        List<User> users = userService.findUsersByUsername(username); // 已存在的用户
         if(users.isEmpty()){
             newUser.setPassword(password);
             newUser.setUsername(username);
-            userRepository.save(newUser); // 将新创建的用户存储到数据库
+            userService.save(newUser); // 将新创建的用户存储到数据库
             model.addAttribute("user",newUser); // 返回新创建的用户
         }
         model.addAttribute("users",users); // 返回查询结果，users的长度 (=0 说明数据库中没有，可以创建) (>0 用户名已经存在，不能创建) 由前端进行判断

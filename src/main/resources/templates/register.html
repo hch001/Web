@@ -34,7 +34,7 @@
         </div>
 
         <div  th:if="${users!=null}">
-            <div  th:if="${#lists.size(users)>0}">
+            <div  th:if="${#lists.size(users)>0}" style="clear: left">
                 <div class="login-fail-status" >
                     <span >用户名已存在</span>
                 </div>

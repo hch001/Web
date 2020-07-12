@@ -53,6 +53,7 @@ a{
 .login-fail-status{
     letter-spacing: 3px;
     color: crimson;
+    margin-top:3px;
 }
 /*#click-button{*/
 /*    border:0;*/
