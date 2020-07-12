@@ -28,7 +28,6 @@ public class LoginController {
     public String loginConn(@RequestParam("username") String username, @RequestParam("password") String password, // 获取前端request中的返回的登录用户名和密码
                             HttpSession session, Model model){
         model.addAttribute("users",null); // 先清空
-
         List<User> users = userService.findUsersByUsernameAndPassword(username,password); // 查询是否有效
         if(users.size()>0) {
             session.setAttribute("user",username); // 正确，在session中存储user属性，并赋值
@@ -41,7 +40,7 @@ public class LoginController {
     // 跳转到register初始页面
     @RequestMapping(value="/register_page",method = RequestMethod.GET)
     public String loadRegisterPage(Model model){
-        model.addAttribute("valid",3); //
+        model.addAttribute("valid",3);
         return "register";
     }
 
@@ -51,8 +50,7 @@ public class LoginController {
         newUser.setUsername(username);
         newUser.setPassword(password);
         int valid = userService.save(newUser);
-        model.addAttribute("valid",valid);
-        System.out.println("valid:"+valid);
+        model.addAttribute("valid",valid); // 判断是否有效的变量
         return "register";
     }
 
