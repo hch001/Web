@@ -48,4 +48,10 @@ public class MainController {
         return "main";
     }
 
+    @RequestMapping(value = "/main/exit",method = RequestMethod.GET)
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/login/login_page";
+    }
+
 }

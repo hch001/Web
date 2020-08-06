@@ -19,7 +19,11 @@
                     dataType: 'json',
                     url: filmId,
                     success:function (response) { // 等待response
-                        alert(response.msg)
+                        alert(response.msg);
+                        if(response.valid==="true"){
+                            const img = "../images/like2.png";
+                            document.getElementById("like-btn").style.backgroundImage="url("+img+")";
+                        }
                     }
                 });
             }
@@ -35,11 +39,58 @@
                     dataType: 'json',
                     url: filmId,
                     success:function (response) { // 等待response
-                        alert(response.msg)
+                        alert(response.msg);
+                        if(response.valid==="true"){
+                            const img = "../images/disLike2.png";
+                            document.getElementById("dislike-btn").style.backgroundImage="url("+img+")";
+                        }
                     }
                 });
             }
         }
+        function add() {
+            const interaction = {username: user, filmId: filmId, interested: 2};
+            if (user == null) alert("您还没有登录");
+            else {
+                $.ajax({
+                    type: 'POST',
+                    data:JSON.stringify(interaction),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    url: filmId,
+                    success:function (response) { // 等待response
+                        alert(response.msg);
+                        if(response.valid==="true"){
+                            const img = "../images/add2.png";
+                            document.getElementById("add-btn").style.backgroundImage="url("+img+")";
+                        }
+                    }
+                });
+            }
+        }
+
+        // 以下代码借鉴 https://blog.csdn.net/xiongqiangwin1314/article/details/47864653?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight
+
+         function setBodyWidth(){
+             var barWidthHelper=document.createElement('div');
+             barWidthHelper.style.cssText="overflow:scroll; width:100px; height:100px;";
+             document.body.appendChild(barWidthHelper);
+             var barWidth=barWidthHelper.offsetWidth-barWidthHelper.clientWidth;
+             document.body.removeChild(barWidthHelper);
+             var bodyWidth=window.screen.availWidth-barWidth;
+             return bodyWidth;
+         }
+
+         $(document).ready(
+             function(){
+                 var bodyWidth=setBodyWidth()+"px";
+                 //document.body.style.width=bodyWidth;
+                 $("body").css("width",bodyWidth);
+             }
+         );
+
+         // 以上代码借鉴 https://blog.csdn.net/xiongqiangwin1314/article/details/47864653?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight
+
     </script>
 </head>
 
@@ -50,13 +101,14 @@
             <div style="text-align: left;font-size: small;color: #d5d5d5;padding: 0px 20px;float: left;">
                 <a th:href="@{/login/register_page}">注册</a>
                 <a th:href="@{/login/login_page}">登录</a>
-                <a th:href="@{/main/exit}">退出账号</a>
+                <a th:href="@{/main/exit}" th:if="${session.user!=null}">退出账号</a>
                 <a th:href="@{/main/}">返回主页</a>
             </div>
             <div  style="text-align: right;font-size: small;color: #d5d5d5;padding: 0px 20px;">
-                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${user}">username</span>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${session.user}">username</span>
             </div>
         </div>
+
     </div>
 
     <hr>
@@ -100,14 +152,38 @@
                 </div>
 
             </div>
+
+        <div id="feedback-area">
+            <!--        <form method="POST">-->
+            <button type="button" id="like-btn" value="" name="like" title="喜欢" onclick="like_click()"></button>
+            <button type="button" id="dislike-btn" value="" name="dislike" title="不喜欢" onclick="notLike_click()"></button>
+            <button type="button" id="add-btn" value="" name="add" title="收藏" onclick="add()"></button>
+            <!--        </form>-->
         </div>
 
+    </div>
 
-    <div id="like-area">
-<!--        <form method="POST">-->
-        <button type="button" id="like-btn" value="" name="like" title="喜欢" onclick="like_click()"></button>
-        <button type="button" id="not-like-btn" value="" name="notLike" title="不喜欢" onclick="notLike_click()"></button>
-<!--        </form>-->
+
+
+
+    <div id="recommend-area">
+        <span>相似的作品</span>
+        <hr>
+        <div th:if="${similarFilms!=null}">
+            <div th:each="film: ${similarFilms}">
+                <div class="film-container" >
+                    <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                    <div>
+                        <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
+                        <span class="rating" th:if="${film.rating!=null}" th:text="${film.rating}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center" th:if="${similarFilms==null}">
+            <h3>暂无</h3>
+        </div>
     </div>
 
 </body>

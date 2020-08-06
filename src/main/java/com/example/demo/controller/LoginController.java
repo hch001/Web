@@ -19,7 +19,8 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping(value="/login_page",method = RequestMethod.GET) // 跳转到login初始页面
-    public String loadLoginPage(){
+    public String loadLoginPage(Model model){
+        model.addAttribute("users",null);
         return "login";
     }
 
@@ -39,7 +40,7 @@ public class LoginController {
     // 跳转到register初始页面
     @RequestMapping(value="/register_page",method = RequestMethod.GET)
     public String loadRegisterPage(Model model){
-        model.addAttribute("valid",3);
+        model.addAttribute("valid",4); // 说明还没有经过注册查询
         return "register";
     }
 

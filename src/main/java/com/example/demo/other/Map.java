@@ -1,4 +1,4 @@
-package com.example.demo.dataProcess;
+package com.example.demo.other;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -106,7 +106,7 @@ public class Map {
     // 初始化
     public void init(boolean withHead){
         try{
-            Connection conn = getConn("db2","root","qazxsw123");
+            Connection conn = getConn("db2","root","123456");
             HashMap<String,String> items = item2entityID(conn);
             HashMap<String,String> persons = person2entityID(conn);
             HashMap<String,String> users = user2newID(conn);
@@ -130,7 +130,7 @@ public class Map {
     // 获取数据库连接
     private static Connection getConn(String dbName,String userName,String password) throws ClassNotFoundException, SQLException { // 返回数据库连接
         Class.forName("com.mysql.cj.jdbc.Driver");
-        String url="jdbc:mysql://localhost:3306/"+dbName+"?useSSL=false&serverTimezone=UTC";
+        String url="jdbc:mysql://localhost:3306/"+dbName+"?useSSL=false&serverTimezone=UTC&characterEncoding=utf-8&allowPublicKeyRetrieval=true";
         return DriverManager.getConnection(url,userName,password);
     }
 
@@ -275,7 +275,7 @@ public class Map {
         return items;
     }
 
-    // 将所有person转化成entityID
+    // 将所有person转化成entityID(actor,director,author)
     public static HashMap<String,String> person2entityID(Connection conn) throws SQLException { 
         HashMap<String,String> persons = new HashMap<>();
         ResultSet actors = conn.prepareStatement("select actorID from actor;").executeQuery();

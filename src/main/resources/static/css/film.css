@@ -20,19 +20,21 @@ body{
     margin: 0px 300px;
     padding: 18px 20px;
 } */
-.item-container{
-    width: 90%;
-    height: 32%;
+.item-container {
+    width: 45%;
+    height: 40%;
     /* border: 1px solid #000000; */
-    margin: 20px auto 0;
-    padding: 0px 20px;
+    margin: 30px 30% 30px 22%;
+    padding: 10px 20px;
+    box-shadow: 3px 3px 2px #a08f8f96;
+    background-color: #e1f7e8;
 }
-.item{
+.item {
     float: left;
     /* border: 1px solid #000000; */
-    width: 25%;
-    height: 100%;
-    /*background-color: #32494520;*/
+    width: 60%;
+    height: 80%;
+    /* background-color: #32494520; */
     border-radius: 15px;
     margin-left: 20px;
     padding: 10px;
@@ -45,24 +47,27 @@ body{
 .value{
     font-size: 14px;
 }
-#poster{
-    height: 100%;
+#poster {
+    height: 80%;
     width: auto;
     float: left;
-    margin-left: 20%;
+    /* margin-left: 10%; */
 }
-#like-area{
+#feedback-area {
     height: 10%;
-    width: 10%;
+    width: 25%;
     /* border: 1px solid #000000; */
     text-align: center;
-    margin-left: 24%;
+    margin-left: 15px;
+    /*background-color: white;*/
     margin-top: 5px;
+    clear: left;
+    border-radius: 5px;
 }
 
 
 #like-btn{
-    background: url("../images/like.png") no-repeat 0px 0px;
+    background: url("../images/like1.png") no-repeat 0px 0px;
     height: 30px;
     width: 30px;
 
@@ -71,8 +76,18 @@ body{
     outline: none;
     margin: 5px 15px;
 }
-#not-like-btn{
-    background: url("../images/notLike.png") no-repeat 0px 0px;
+#dislike-btn{
+    background: url("../images/disLike1.png") no-repeat 0px 0px;
+    height: 30px;
+    width: 30px;
+
+    background-size: contain;
+    border: none;
+    outline: none;
+    margin:5px 15px;
+}
+#add-btn{
+    background: url("../images/add1.png") no-repeat 0px 0px;
     height: 30px;
     width: 30px;
 
@@ -92,4 +107,37 @@ body{
 }
 a{
     text-decoration-line: none;
+}
+#recommend-area {
+    border-radius: 10px;
+    /* background-color: rgb(200, 222, 236); */
+    height: 26%;
+    width: 47%;
+    margin: 7% 30% 28px 22%;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0px 0px 30px #ddd1d1;
+}
+
+.film-container {
+    width: 105px;
+    height: 154px;
+    background-color: #cbdd99;
+    float: left;
+    margin: 13px 20px 37px 20px;
+    text-align: center;
+}
+
+.film-container div{
+    text-align: center;
+}
+.film-container div a{
+    color: rgb(51, 119, 170);
+    text-decoration-line: none;
+    font-size: 14px;
+}
+.film-container div .rating{
+    color: rgb(224, 144, 21);
+    font-size: 14px;
 }

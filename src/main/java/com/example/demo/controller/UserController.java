@@ -1,27 +1,28 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Film;
-import com.example.demo.service.FilmService;
+import com.example.demo.service.FavoriteService;
+import com.example.demo.service.InteractionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/main")
 public class UserController {
     @Resource
-    private FilmService filmService;
+    private InteractionService interactionService;
+    @Resource
+    private FavoriteService favoriteService;
 
 
     // 特定用户界面
-    @RequestMapping(value = "/{user}",method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{user}",method = RequestMethod.GET)
     public String loadUserPage(HttpSession session, @PathVariable String user,Model model){
         Object object = session.getAttribute("user");
         // session的user属性在LoginController中已经被赋值(如果已经登录的话,)，否则为空
@@ -33,26 +34,16 @@ public class UserController {
             model.addAttribute("errMsg","您不能访问他人的主页");
         }
         model.addAttribute("errMsg",null); // 清除错误信息
-        List<Film> movies = filmService.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
-        model.addAttribute("movies",movies);
-        List<Film> tvs = filmService.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
-        model.addAttribute("tvs",tvs);
-        return "main";
-    }
 
-    // 特定用户界面，退出当前帐号，无效当前session
-    @RequestMapping(value = "/exit",method = RequestMethod.GET)
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "redirect:/login/login_page";
-    }
+        // 传递数据
+        // 最近喜欢的影片
+        List<Film> recentLiked = interactionService.findAllLikedFilmsByUsernameWithLimit(user,6);
+        // 最近添加到收藏夹的影片
+        List<Film> recentAdded = favoriteService.findAllFilmsAddedByUsername(user,6);
+        model.addAttribute("recentLiked",recentLiked);
+        model.addAttribute("recentAdded",recentAdded);
 
-    @RequestMapping(value="/{user}",method = RequestMethod.POST)
-    public String search(@RequestParam("search") String search, Model model)  {
-        List<Film> result = filmService.findAllByTitleContains(search);
-        model.addAttribute("result",null);
-        model.addAttribute("result",result);
-        return "main";
+        return "user";
     }
 
 }

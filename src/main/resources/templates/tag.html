@@ -5,7 +5,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script>
         function show_more() {
-            document.getElementById("result-container").style.overflow="visible";
+            document.getElementById("hot-items-container").style.overflow="visible";
             document.getElementById("more-btn").style.visibility="hidden";
         }
 
@@ -35,6 +35,7 @@
     </script>
 </head>
 
+
 <body>
 
     <div class="header-container">
@@ -42,14 +43,14 @@
             <div style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;float: left" class="user-head-msg">
                 <a th:href="@{/login/register_page}">注册</a>
                 <a th:href="@{/login/login_page}">登录</a>
-                <a th:href="@{/main/exit}" th:if="${session.user!=null}">退出账号</a>
-                <a th:href="@{'/users/'+${session.user}}" th:if="${session.user!=null}">我的账号</a>
+                <a th:href="@{/main/exit}">退出账号</a>
+                <a th:href="@{/main}">返回主页</a>
             </div>
 
             <img id="neko" th:src="@{/images/neko.png}" >
 
             <div  style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;" class="user-head-msg">
-                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${session.user}">username</span>
+                <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${user}">username</span>
             </div>
         </div>
         <div class="search-head">
@@ -96,23 +97,21 @@
 
         </div>
 
-
-
         <div>
             <div>
                 <span>&nbsp&nbsp&nbsp</span><span><b>类型:</b></span>
             </div>
 
             <div>
-                <a th:href="@{/film/types/animation}">动漫</a><span>&nbsp</span>
+                <a th:href="@{/film/types/动画}">动画</a><span>&nbsp</span>
             </div>
 
             <div>
-                <a th:href="@{/film/types/variety}">综艺</a><span>&nbsp</span>
+                <a th:href="@{/film/types/综艺}">综艺</a><span>&nbsp</span>
             </div>
 
             <div>
-                <a th:href="@{/film/types/documentary}">纪录片</a><span>&nbsp</span>
+                <a th:href="@{/film/types/纪录片}">纪录片</a><span>&nbsp</span>
             </div>
         </div>
 
@@ -232,66 +231,27 @@
 
         </div>
 
-
     </div>
 
-    <div class="hot-items-container" th:if="${movies!=null and result==null}">
+    <div class="hot-items-container" th:if="${found}" id="hot-items-container">
 
-        <span><b>近期热门电影</b></span>
+    <!--    <span th:text="${tag}" ><b></b></span>-->
+        <span th:text="${key}"><b></b></span>
         <hr >
 
-        <div th:each="movie : ${movies}">
+        <div th:each="film : ${films}">
             <div class="film-container">
                 <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
                 <div>
-                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{'/film/'+${movie.filmId}}" th:text="${movie.title}">HAMILTON</a>
-                    <span class="rating" th:text="${movie.rating}">8.5</span>
+                    <!--<i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" ></i>-->
+                    <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}">HAMILTON</a>
+                    <span class="rating" th:text="${film.rating}"></span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="hot-items-container" th:if="${tvs!=null and result==null}">
-
-        <span><b>近期热门电视剧</b></span>
-        <hr >
-
-        <div th:each="tv : ${tvs}">
-            <div class="film-container">
-                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
-                <div>
-                    <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{'/film/'+${tv.filmId}}" th:text="${tv.title}">HAMILTON</a>
-                    <span class="rating" th:text="${tv.rating}">8.5</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="hot-items-container" th:if="${result!=null}" id="result-container">
-
-        <div th:if="${#lists.isEmpty(result)}" style="text-align: center">
-            <br>
-            <span><b>没有找到您想要的资源哦</b></span>
-        </div>
-
-        <div th:if="${#lists.size(result)>0}">
-            <span><b>查询结果如下</b></span>
-            <hr>
-            <div th:each="film :${result}">
-                <div class="film-container">
-                    <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
-                    <div>
-                        <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
-                        <span class="rating" th:if="${film.rating!=null}" th:text="${film.rating}"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="more" th:if="${result!=null and #lists.size(result)>10 }">
+    <div id="more" th:if="${found and #lists.size(films)>10 }">
         <a href="#"  id="more-btn" onclick="show_more()">查看全部</a>
     </div>
 
@@ -349,14 +309,6 @@
         </div>
     </div>
 
-<!--    <footer style="    width: 45%;-->
-<!--    height: 8%;-->
-<!--    margin-top: 50px;-->
-<!--    margin-left: 17%;-->
-<!--    margin-right: 30%;-->
-<!--    text-align: center;">-->
-<!--        <hr>-->
-<!--        <span style="font-size: 12px;margin-top: 0;">CopyRight</span>-->
-<!--    </footer>-->
+
 
 </body>

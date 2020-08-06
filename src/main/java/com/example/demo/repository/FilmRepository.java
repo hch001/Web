@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.table.TableRowSorter;
 import java.util.List;
 
 @Repository
@@ -20,5 +21,15 @@ public interface FilmRepository extends JpaRepository<Film,Long> {
     @Query(value="select * from film where rating > ?1 and `type`='tv' order by release_date DESC limit ?2",nativeQuery = true)
     List<Film> findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(int rating,int limit);
 
+    @Query(value="select * from film where LOCATE(?1,genres) order by rating desc,release_date desc",nativeQuery = true)
+    List<Film> findAllByGenresContainsAndOrderByRatingAndDate(String genre);
 
+    @Query(value="select * from film where locate(?1,film.type) order by rating desc,release_date desc",nativeQuery = true)
+    List<Film> findAllByTypeContainsAndOrderByRatingAndDate(String type);
+
+    @Query(value="select * from film where locate(?1,film.area)=1 order by rating desc,release_date desc",nativeQuery = true)
+    List<Film> findAllByAreaStartsWithAndOrderByRatingAndDate(String area);
+
+    @Query(value="select * from film where locate(?1,film.genres) and locate(?2,film.language)=1 and abs(UNIX_TIMESTAMP(film.release_date)-UNIX_TIMESTAMP('2004-12-2'))/(86400*365) < ?3 order by rating desc,release_date desc limit ?4 ",nativeQuery = true)
+    List<Film> findAllByGenresContainingAndOrderByRatingAndDateWithLimit(String genre,String language,int range,int limit);
 }
