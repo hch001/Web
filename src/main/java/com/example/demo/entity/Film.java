@@ -18,6 +18,7 @@ public class Film {
     private Float rating;
     private String description;
     private String type;
+    private String poster;
 
     public void setFilmId(Long filmId) {
         this.filmId = filmId;
@@ -91,4 +92,11 @@ public class Film {
         return type;
     }
 
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 }

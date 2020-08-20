@@ -55,7 +55,7 @@ public class UserService {
             }
         }
 
-        return username.length()<=20 && username.length() >= 2 && password.length() >= 8 && password.length()<=20 && complexity >= 2 ;
+        return username.length()<=33 && username.length() >= 2 && password.length() >= 8 && password.length()<=33 && complexity >= 2 ;
     }
 
     // 检测非法字符(目前只支持数字和大小写字母)

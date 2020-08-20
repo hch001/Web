@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head xmlns:th="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/film.css}">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script th:inline="javascript" >
@@ -103,6 +103,7 @@
                 <a th:href="@{/login/login_page}">登录</a>
                 <a th:href="@{/main/exit}" th:if="${session.user!=null}">退出账号</a>
                 <a th:href="@{/main/}">返回主页</a>
+                <a th:href="@{'/users/'+${session.user}}" th:if="${session.user!=null}">我的账号</a>
             </div>
             <div  style="text-align: right;font-size: small;color: #d5d5d5;padding: 0px 20px;">
                 <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp<span th:text="${session.user}">username</span>
@@ -118,70 +119,111 @@
     </div>
 
 
-    <div class="item-container" th:href="${films!=null and #lists.size(films)>0}">
+    <div id="left-area" style="height: 100% ;width: 50%;float: left">
+        <div class="item-container" th:href="${films!=null and #lists.size(films)>0}">
 
             <div>
-                <img th:src="@{/images/m1.jpg}" id="poster">
+                <img th:src="@{${films[0].poster}}" id="poster">
             </div>
 
             <div class="item">
 
-                <div class="attribute" >
-                    <label><b>Title:</b></label> <span>&nbsp</span>
-                    <span class="value" th:text="${films[0].title}"></span>
+                <div class="attribute" style="text-align: center">
+                    <!--                    <label><b>Title:</b></label> <span>&nbsp</span>-->
+                    <b><span class="value" th:text="${films[0].title}" style="font-size: 25px"></span></b>
+                    <span>
+
+                    </span>
                 </div>
 
                 <div class="attribute" th:if="${films[0].releaseDate!=null}">
-                    <label><b>releaseDate:</b></label> <span>&nbsp</span>
+                    <label><b>发行日期:</b></label> <span>&nbsp</span>
                     <span class="value" th:text="${films[0].releaseDate}"></span>
                 </div>
 
-                <div class="attribute" th:if="${films[0].rating!=null}">
-                    <label><b>Rating:</b></label> <span>&nbsp</span>
-                    <span class="value" th:text="${films[0].rating}"></span>
-                </div>
 
                 <div class="attribute" th:if="${films[0].genres!=null}">
-                    <label><b>Genres:</b></label> <span>&nbsp</span>
+                    <label><b>类型:</b></label> <span>&nbsp</span>
                     <span class="value" th:text="${films[0].genres}"></span>
                 </div>
 
+                <div class="attribute" th:if="${films[0].area!=null}">
+                    <label><b>地区:</b></label> <span>&nbsp</span>
+                    <span class="value" th:text="${films[0].area}"></span>
+                </div>
+
+                <div class="attribute" th:if="${films[0].rating!=null and films[0].rating>0}">
+                    <label><b>评分:</b></label> <span>&nbsp</span>
+                    <span class="value" th:text="${films[0].rating}" ></span>
+                </div>
+
+                <div class="attribute" th:if="${actorNames!=null}">
+                    <label><b>演员:</b></label><span>&nbsp</span>
+                    <span class="value" th:text="${actorNames}"></span>
+                </div>
+
+
                 <div class="attribute" th:if="${films[0].description!=null}">
-                    <label><b>Description:</b></label> <br><span>&nbsp;</span>
+                    <label><b>简介:</b></label> <br><span>&nbsp;</span>
                     <span class="value" th:text="${films[0].description}"></span>
                 </div>
 
             </div>
 
-        <div id="feedback-area">
-            <!--        <form method="POST">-->
-            <button type="button" id="like-btn" value="" name="like" title="喜欢" onclick="like_click()"></button>
-            <button type="button" id="dislike-btn" value="" name="dislike" title="不喜欢" onclick="notLike_click()"></button>
-            <button type="button" id="add-btn" value="" name="add" title="收藏" onclick="add()"></button>
-            <!--        </form>-->
+            <div id="feedback-area">
+                <!--        <form method="POST">-->
+                <button type="button" id="like-btn" value="" name="like" title="喜欢" onclick="like_click()"></button>
+                <button type="button" id="dislike-btn" value="" name="dislike" title="不喜欢" onclick="notLike_click()"></button>
+                <button type="button" id="add-btn" value="" name="add" title="收藏" onclick="add()"></button>
+                <!--        </form>-->
+            </div>
+
+        </div>
+
+
+
+
+
+        <div id="recommend-area">
+            <span>您可能喜欢</span>
+            <hr>
+            <div th:if="${similarFilms!=null}">
+                <div th:each="film: ${similarFilms}">
+                    <div class="film-container" >
+                        <img th:src="@{${film.poster}}" style="height: 100%;width: 100%;">
+                        <div>
+                            <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
+                            <span class="rating" th:if="${film.rating!=null and film.rating>0}" th:text="${film.rating}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center" th:if="${similarFilms==null}">
+                <h3>暂无</h3>
+            </div>
         </div>
 
     </div>
 
 
 
-
-    <div id="recommend-area">
-        <span>相似的作品</span>
+    <div id="right-area">
+        <span>相关作品</span>
         <hr>
-        <div th:if="${similarFilms!=null}">
-            <div th:each="film: ${similarFilms}">
+        <div th:if="${relativeFilms!=null}">
+            <div th:each="film: ${relativeFilms}">
                 <div class="film-container" >
-                    <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                    <img th:src="@{${film.poster}}" style="height: 100%;width: 100%;">
                     <div>
                         <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
-                        <span class="rating" th:if="${film.rating!=null}" th:text="${film.rating}"></span>
+                        <span class="rating" th:if="${film.rating!=null and film.rating>0}" th:text="${film.rating}"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div style="text-align: center" th:if="${similarFilms==null}">
+        <div style="text-align: center" th:if="${relativeFilms==null}">
             <h3>暂无</h3>
         </div>
     </div>

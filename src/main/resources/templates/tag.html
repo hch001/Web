@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head xmlns:th="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script>
         function show_more() {
@@ -43,8 +43,9 @@
             <div style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;float: left" class="user-head-msg">
                 <a th:href="@{/login/register_page}">注册</a>
                 <a th:href="@{/login/login_page}">登录</a>
-                <a th:href="@{/main/exit}">退出账号</a>
                 <a th:href="@{/main}">返回主页</a>
+                <a th:href="@{/main/exit}" th:if="${session.user!=null}">退出账号</a>
+                <a th:href="@{'/users/'+${session.user}}" th:if="${session.user!=null}">我的账号</a>
             </div>
 
             <img id="neko" th:src="@{/images/neko.png}" >
@@ -236,16 +237,16 @@
     <div class="hot-items-container" th:if="${found}" id="hot-items-container">
 
     <!--    <span th:text="${tag}" ><b></b></span>-->
-        <span th:text="${key}"><b></b></span>
+        <b><span th:text="${key}"></span></b>
         <hr >
 
         <div th:each="film : ${films}">
             <div class="film-container">
-                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <img th:src="@{${film.poster}}" style="height:100%;width: 100%;">
                 <div>
                     <!--<i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" ></i>-->
                     <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}">HAMILTON</a>
-                    <span class="rating" th:text="${film.rating}"></span>
+                    <span class="rating" th:text="${film.rating}" th:if="${film.rating>0}"></span>
                 </div>
             </div>
         </div>

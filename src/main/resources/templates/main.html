@@ -1,36 +1,13 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head xmlns:th="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script>
         function show_more() {
             document.getElementById("result-container").style.overflow="visible";
             document.getElementById("more-btn").style.visibility="hidden";
         }
-
-        // 以下代码借鉴 https://blog.csdn.net/xiongqiangwin1314/article/details/47864653?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight
-
-        function setBodyWidth(){
-            var barWidthHelper=document.createElement('div');
-            barWidthHelper.style.cssText="overflow:scroll; width:100px; height:100px;";
-            document.body.appendChild(barWidthHelper);
-            var barWidth=barWidthHelper.offsetWidth-barWidthHelper.clientWidth;
-            document.body.removeChild(barWidthHelper);
-            var bodyWidth=window.screen.availWidth-barWidth;
-            return bodyWidth;
-        }
-
-        $(document).ready(
-            function(){
-                var bodyWidth=setBodyWidth()+"px";
-                //document.body.style.width=bodyWidth;
-                $("body").css("width",bodyWidth);
-            }
-        );
-
-        // 以上代码借鉴 https://blog.csdn.net/xiongqiangwin1314/article/details/47864653?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight
-
 
     </script>
 </head>
@@ -42,6 +19,7 @@
             <div style="text-align: right;font-size: small;color: #d5d5d5;padding:0 20px ;float: left" class="user-head-msg">
                 <a th:href="@{/login/register_page}">注册</a>
                 <a th:href="@{/login/login_page}">登录</a>
+                <a th:href="@{/main}">返回主页</a>
                 <a th:href="@{/main/exit}" th:if="${session.user!=null}">退出账号</a>
                 <a th:href="@{'/users/'+${session.user}}" th:if="${session.user!=null}">我的账号</a>
             </div>
@@ -242,7 +220,7 @@
 
         <div th:each="movie : ${movies}">
             <div class="film-container">
-                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <img th:src="@{${movie.poster}}" style="height:100%;width: 100%;">
                 <div>
                     <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{'/film/'+${movie.filmId}}" th:text="${movie.title}">HAMILTON</a>
                     <span class="rating" th:text="${movie.rating}">8.5</span>
@@ -258,7 +236,7 @@
 
         <div th:each="tv : ${tvs}">
             <div class="film-container">
-                <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                <img th:src="@{${tv.poster}}" style="height:100%;width: 100%;">
                 <div>
                     <i class="fa fa-fire" aria-hidden="true" style="color:rgb(100,190,80);" title="热门"></i> <a class="film-title" th:href="@{'/film/'+${tv.filmId}}" th:text="${tv.title}">HAMILTON</a>
                     <span class="rating" th:text="${tv.rating}">8.5</span>
@@ -280,10 +258,10 @@
             <hr>
             <div th:each="film :${result}">
                 <div class="film-container">
-                    <img th:src="@{/images/m1.jpg}" style="height: auto;width: 100%;">
+                    <img th:src="@{${film.poster}}" style="height:100%;width: 100%;">
                     <div>
                         <a class="film-title" th:href="@{'/film/'+${film.filmId}}" th:text="${film.title}"></a>
-                        <span class="rating" th:if="${film.rating!=null}" th:text="${film.rating}"></span>
+                        <span class="rating" th:if="${film.rating!=null and film.rating>0}" th:text="${film.rating}"></span>
                     </div>
                 </div>
             </div>

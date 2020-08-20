@@ -3,10 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.entity.Favorite;
 import com.example.demo.entity.Film;
 import com.example.demo.entity.Interaction;
+import com.example.demo.service.ActorService;
 import com.example.demo.service.FavoriteService;
 import com.example.demo.service.FilmService;
 import com.example.demo.service.InteractionService;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,8 @@ public class FilmController  {
     private InteractionService interactionService;
     @Resource
     private FavoriteService favoriteService;
+    @Resource
+    private ActorService actorService;
 
 
     @RequestMapping(value = "/{filmId}",method = RequestMethod.GET)
@@ -32,8 +36,11 @@ public class FilmController  {
         model.addAttribute("user",session.getAttribute("user"));
         List<Film> films = filmService.findByFilmId(Long.parseLong(filmId));
         model.addAttribute("films",films);
-        List<Film> similarFilms = filmService.findSimilarFilms(filmId,"localhost",8848);
+        model.addAttribute("actorNames",actorService.getActorsNameActedInFilm(Long.parseLong(filmId)));
+        List<Film> similarFilms = filmService.findSimilarFilms(filmId,"localhost",8850,200,5);
         model.addAttribute("similarFilms",similarFilms);
+        List<Film> relativeFilms = filmService.findSimilarFilms(filmId,"localhost",8849,400,9);
+        model.addAttribute("relativeFilms",relativeFilms);
         return "film";
     }
 
@@ -109,7 +116,7 @@ public class FilmController  {
         return "tag";
     }
 
-    @RequestMapping(value="/area/*",method = RequestMethod.POST)
+    @RequestMapping(value="/areas/*",method = RequestMethod.POST)
     public String search1(@RequestParam("search") String search,Model model){
         List<Film> result = filmService.findAllByTitleContains(search);
         model.addAttribute("result",null);

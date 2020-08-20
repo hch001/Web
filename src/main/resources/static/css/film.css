@@ -21,11 +21,11 @@ body{
     padding: 18px 20px;
 } */
 .item-container {
-    width: 45%;
+    width: 100%;
     height: 40%;
     /* border: 1px solid #000000; */
     margin: 30px 30% 30px 22%;
-    padding: 10px 20px;
+    padding: 30px 20px;
     box-shadow: 3px 3px 2px #a08f8f96;
     background-color: #e1f7e8;
 }
@@ -110,22 +110,22 @@ a{
 }
 #recommend-area {
     border-radius: 10px;
-    /* background-color: rgb(200, 222, 236); */
+     background-color: rgb(200, 222, 236);
     height: 26%;
-    width: 47%;
+    width: 102%;
     margin: 7% 30% 28px 22%;
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    box-shadow: 0px 0px 30px #ddd1d1;
+    box-shadow: 5px 5px 10px #ddd1d1;
 }
 
 .film-container {
     width: 105px;
     height: 154px;
-    background-color: #cbdd99;
+    /* background-color: #cbdd99; */
     float: left;
-    margin: 13px 20px 37px 20px;
+    margin: 13px 30px 80px;
     text-align: center;
 }
 
@@ -140,4 +140,15 @@ a{
 .film-container div .rating{
     color: rgb(224, 144, 21);
     font-size: 14px;
+}
+
+#right-area {
+    padding: 10px;
+    height: 78%;
+    width: 30%;
+    float: right;
+    margin: 2% 3%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #ddd1d1;
+    background-color: lightyellow;
 }

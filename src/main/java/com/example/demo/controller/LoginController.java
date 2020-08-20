@@ -31,7 +31,7 @@ public class LoginController {
         List<User> users = userService.findUsersByUsernameAndPassword(username,password); // 查询是否有效
         if(users.size()>0) {
             session.setAttribute("user",username); // 正确，在session中存储user属性，并赋值
-            session.setMaxInactiveInterval(36000); // 设置session失效的时间，10h
+            session.setMaxInactiveInterval(7200); // 设置session失效的时间，2h
         }
         model.addAttribute("users",users); // model中存储查询的结果，前端判断该数组的大小，(=0 账号不存在),(>0 合法)
         return "login";

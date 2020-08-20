@@ -30,6 +30,9 @@ public interface FilmRepository extends JpaRepository<Film,Long> {
     @Query(value="select * from film where locate(?1,film.area)=1 order by rating desc,release_date desc",nativeQuery = true)
     List<Film> findAllByAreaStartsWithAndOrderByRatingAndDate(String area);
 
-    @Query(value="select * from film where locate(?1,film.genres) and locate(?2,film.language)=1 and abs(UNIX_TIMESTAMP(film.release_date)-UNIX_TIMESTAMP('2004-12-2'))/(86400*365) < ?3 order by rating desc,release_date desc limit ?4 ",nativeQuery = true)
-    List<Film> findAllByGenresContainingAndOrderByRatingAndDateWithLimit(String genre,String language,int range,int limit);
+    @Query(value="select * from film where locate(?1,film.genres) and locate(?2,film.language)=1  order by rating desc,release_date desc limit ?3 ",nativeQuery = true)
+    List<Film> findAllByOneGenreAndLanguageWithLimit(String genre,String language,int limit);
+
+    @Query(value="select * from film where locate(?1,film.genres) and locate(?2,film.genres) and locate(?3,film.language)=1  order by rating desc,release_date desc limit ?4 ",nativeQuery = true)
+    List<Film> findAllByTwoGenreAndLanguageWithLimit(String genre1,String genre2,String language,int limit);
 }
