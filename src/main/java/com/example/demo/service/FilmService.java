@@ -127,6 +127,7 @@ public class FilmService {
 
     // 计算不出相似度结果的影片采用该方法推荐
     public List<Film> getDefaultSimilarFilm(Film f,int limit) {
+        System.out.println("调用默认方法");
         String g = f.getGenres(), l=f.getLanguage();
         if(g.length()<=1||l.length()<=1) return null; // 过于小众且无标签，无法推荐
 
@@ -143,7 +144,7 @@ public class FilmService {
         // 根据获取的标签数量选择方法
         List<Film> films = (genres.size()==1)?(filmRepository.findAllByOneGenreAndLanguageWithLimit(genres.get(0),l,6)):(filmRepository.findAllByTwoGenreAndLanguageWithLimit(genres.get(0),genres.get(1),l,limit+1));
 
-
+        System.out.println("films:"+films.get(0).getFilmId());
         // 过滤本身
         return filter(films,f.getFilmId(),limit);
     }
