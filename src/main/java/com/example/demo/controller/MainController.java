@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Film;
 import com.example.demo.service.FilmService;
+import com.example.demo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,16 +18,24 @@ import java.util.List;
 public class MainController {
     @Resource
     private FilmService filmService;
+    @Resource
+    private UserService userService;
 
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String toIndex(HttpSession session, Model model){
-        Object object = session.getAttribute("user");
         List<Film> movies = filmService.findAllMoviesByRatingGreaterThanAndOrderByDateWithLimit(7,10);
         model.addAttribute("movies",movies);
         List<Film> tvs = filmService.findAllTvsByRatingGreaterThanAndOrderByDateWithLimit(7,10);
         model.addAttribute("tvs",tvs);
         // 还没写完推荐的部分
+        String username = (String)session.getAttribute("user");
+        if(username!=null)
+        {
+            List<Film> films =  userService.getUserBasedRecommendation(username,"localhost",8891,400,9);
+            model.addAttribute("films",films);
+        }
+
         return "main";
     }
 

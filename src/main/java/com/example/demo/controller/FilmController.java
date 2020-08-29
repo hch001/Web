@@ -37,9 +37,9 @@ public class FilmController  {
         List<Film> films = filmService.findByFilmId(Long.parseLong(filmId));
         model.addAttribute("films",films);
         model.addAttribute("actorNames",actorService.getActorsNameActedInFilm(Long.parseLong(filmId)));
-        List<Film> similarFilms = filmService.findSimilarFilms(filmId,"localhost",8850,200,5);
+        List<Film> similarFilms = filmService.findSimilarFilms(filmId,"localhost",8890,200,5);
         model.addAttribute("similarFilms",similarFilms);
-        List<Film> relativeFilms = filmService.findSimilarFilms(filmId,"localhost",8851,400,9);
+        List<Film> relativeFilms = filmService.findSimilarFilms(filmId,"localhost",8891,400,9);
         model.addAttribute("relativeFilms",relativeFilms);
         return "film";
     }

@@ -2,6 +2,8 @@ package com.example.demo.other;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.*;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +36,7 @@ public class client {
     }
 
 
+
     public static void main(String[] args) throws IOException {
 //        new Thread(()->{
 //            try{
@@ -48,11 +51,32 @@ public class client {
 //            }
 //        }).start();
 
-        String s = "附件是看/飞洒地方/飞洒d地方";
-        Pattern pattern = Pattern.compile("(.*?)/");
-        Matcher m = pattern.matcher(s);
-        while(m.find()) {
-            System.out.println(m.group(1));
-        }
+//        String s = "附件是看/飞洒地方/飞洒d地方";
+//        Pattern pattern = Pattern.compile("(.*?)/");
+//        Matcher m = pattern.matcher(s);
+//        while(m.find()) {
+//            System.out.println(m.group(1));
+//        }
+        T t1=new T(1);
+        T t2 = new T(2);
+        T t3 = new T(3);
+
+        HashMap<T,Integer> m= new HashMap<>();
+        m.put(t1,1);
+        m.put(t2,2);
+        m.put(t3,3);
+
+        List<Map.Entry<T,Integer>> l = new ArrayList<>(m.entrySet());
+        l.sort((a,b)-> b.getValue()-a.getValue());
+
+        l.forEach((a)->System.out.println(a.getValue()));
+
+
+    }
+}
+class T{
+    public int id;
+    T(int id){
+        this.id=id;
     }
 }

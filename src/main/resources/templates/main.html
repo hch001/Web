@@ -279,7 +279,7 @@
         </div>
         <hr>
 
-        <div>
+        <div th:if="${films==null}">
             <table>
                 <tbody>
                 <tr>
@@ -321,6 +321,17 @@
                 <tr>
                     <td class="order">10</td>
                     <td class="title"><a>想哭的我摘下了猫的面具</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${films!=null}">
+            <table>
+                <tbody>
+                <tr th:each="film : ${films}">
+                    <td class="order">#</td>
+                    <td class="title"><a th:text="${film.title}" th:href="@{'/film/'+${film.filmId}}" style="color: rgb(51,119,170);text-decoration-line: none"></a></td>
                 </tr>
                 </tbody>
             </table>

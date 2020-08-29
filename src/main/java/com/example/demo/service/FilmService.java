@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Film;
+import com.example.demo.repository.FavoriteRepository;
 import com.example.demo.repository.FilmRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 public class FilmService {
     @Resource
     private FilmRepository filmRepository;
+
 
     // 标签的流行程度 从小到大 越小优先级越高
     static private List<String> rank = new ArrayList<>();
@@ -96,7 +98,7 @@ public class FilmService {
         return new ArrayList<>(s);
     }
 
-    // 向python脚本发送请求返回离线计算出的相似的电影
+    // 向python脚本发送请求返回计算出的电影
     public List<Film> findSimilarFilms(String filmId,String host,int port,int buffSize,int limit) throws IOException {
         Socket socket = new Socket(host,port);
         socket.getOutputStream().write(filmId.getBytes());
@@ -127,7 +129,7 @@ public class FilmService {
 
     // 计算不出相似度结果的影片采用该方法推荐
     public List<Film> getDefaultSimilarFilm(Film f,int limit) {
-        System.out.println("调用默认方法");
+//        System.out.println("调用默认方法");
         String g = f.getGenres(), l=f.getLanguage();
         if(g.length()<=1||l.length()<=1) return null; // 过于小众且无标签，无法推荐
 
@@ -142,9 +144,8 @@ public class FilmService {
         if(genres.size()==0) return null;
 
         // 根据获取的标签数量选择方法
-        List<Film> films = (genres.size()==1)?(filmRepository.findAllByOneGenreAndLanguageWithLimit(genres.get(0),l,6)):(filmRepository.findAllByTwoGenreAndLanguageWithLimit(genres.get(0),genres.get(1),l,limit+1));
+        List<Film> films = (genres.size()==1)?(filmRepository.findAllByOneGenreAndLanguageWithLimit(genres.get(0),l,limit+1)):(filmRepository.findAllByTwoGenreAndLanguageWithLimit(genres.get(0),genres.get(1),l,limit+1));
 
-        System.out.println("films:"+films.get(0).getFilmId());
         // 过滤本身
         return filter(films,f.getFilmId(),limit);
     }
@@ -155,5 +156,7 @@ public class FilmService {
 
         return (films.size()==0)?null:((films.size()>maxSize)?films.subList(0,maxSize):films);
     }
+
+
 
 }
